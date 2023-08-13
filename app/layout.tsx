@@ -1,7 +1,11 @@
-import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import NextAuthProvider from '@/app/providers/NextAuth'
+import Link from 'next/link'
+
+import CssBaseline from "@mui/material/CssBaseline";
+import theme from '@/app/components/theme';
+import { ThemeProvider } from "@mui/material/styles";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,9 +21,31 @@ export default function RootLayout({
 }) {
   return (
     <html lang="jp">
-      <body className={inter.className}>
-        <NextAuthProvider>{children}</NextAuthProvider>
-      </body>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <body className={inter.className}>
+          <NextAuthProvider>
+            <header
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}>
+              <nav className="p-2 h-12">
+                <ul className="flex items-center space-x-2">
+                  <li>
+                    <Link href="/">top</Link>
+                  </li>
+                  <li>
+                    <Link href="/BookShelf">本棚</Link>
+                  </li>
+                </ul>
+              </nav>
+            </header>
+            {children}
+          </NextAuthProvider>
+        </body>
+      </ThemeProvider>
     </html>
   )
 }

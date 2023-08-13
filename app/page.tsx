@@ -1,35 +1,43 @@
 'use client'
 
-import { signIn, signOut, useSession } from 'next-auth/react'
-import Image from 'next/image'
-import styles from './page.module.css'
+import React from 'react';
+import { useSession } from 'next-auth/react';
+import { NextPage } from 'next';
+import { LoginButton, LogoutButton, CreateAccountPage } from "@/app/components/button";
 
-export default function Home() {
-  const { data: session } = useSession()
+const Login: NextPage = () => {
+  const { data: session } = useSession();
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Hello&nbsp;
-          <code className='font-mono font-bold'>{session?.user?.name ?? 'guest'}</code>
-        </p>
-        {!session && (
-          <button
-            onClick={() => signIn()}
-            className='flex w-full justify-center border-2 border-b border-red-300 hover:border-red-400 bg-red-200 hover:bg-red-300 pb-6 pt-8 backdrop-blur-2xl dark:border-red-800 dark:hover:border-red-900 dark:bg-red-800/50 dark:hover:bg-red-900/30 lg:static lg:w-auto lg:rounded-xl lg:p-4'
-          >
-            Sign In
-          </button>
-        )}
-        {session && (
-          <button
-            onClick={() => signOut()}
-            className='flex w-full justify-center border-2 border-b border-green-300 bg-green-200 pb-6 pt-8 backdrop-blur-2xl dark:border-green-800 dark:bg-green-800/30 lg:static lg:w-auto lg:rounded-xl lg:p-4 hover:border-green-400 hover:bg-green-300 dark:hover:border-green-900 dark:hover:bg-green-900/30'
-          >
-            Sign Out
-          </button>
-        )}
-      </div>
+    <main
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      {
+        // セッションがある場合は、プロファイルを表示する
+        session && (
+          <div>
+            <h1>プロファイル</h1>
+            <div>{session.user?.name}</div>
+            <div>{session.user?.email}</div>
+            <LogoutButton />
+          </div>
+        )
+      }
+      {
+        // セッションがない場合は、ログインページに遷移する
+        !session && (
+          <div>
+            <p>ログインして</p>
+            <LoginButton />
+          </div>
+        )
+      }
     </main>
-  )
-}
+  );
+};
+
+export default Login;
