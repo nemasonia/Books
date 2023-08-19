@@ -1,6 +1,8 @@
 import type { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
+import prisma from "@/lib/prisma";
+import { PrismaAdapter } from "@next-auth/prisma-adapter"
 
 export const options: NextAuthOptions = {
   debug: true,
@@ -41,6 +43,9 @@ export const options: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!
     }),
   ],
+  adapter: PrismaAdapter(prisma),
+  secret: process.env.SECRET,
+
   callbacks: {
     jwt: async ({ token, user, account, profile }) => {
       // 注意: トークンをログ出力してはダメです。
@@ -68,5 +73,4 @@ export const options: NextAuthOptions = {
       };
     },
   }
-}
-  ;
+};

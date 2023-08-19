@@ -14,6 +14,7 @@
     "@fontsource/roboto": "^5.0.5",
     "@mui/icons-material": "^5.14.1",
     "@mui/material": "^5.14.2",
+    "@next-auth/prisma-adapter": "^0.4.4-canary.81",
     "@prisma/client": "^5.1.1",
     "@types/node": "20.4.1",
     "@types/react": "18.2.14",
