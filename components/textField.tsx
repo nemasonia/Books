@@ -12,14 +12,3 @@ export const NameTextField = () => {
   );
 };
 
-export const PasswordTextField = () => {
-  return (
-    <TextField
-      name="password"
-      label="パスワード"
-      sx={{ display: "flex", maxWidth: 360 }}
-      helperText="英数字、記号で入力"
-      margin="normal"
-    />
-  );
-};

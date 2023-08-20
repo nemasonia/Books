@@ -21,13 +21,3 @@ export const LogoutButton = () => {
     </Button>
   );
 };
-
-// アカウント作成ボタン
-// ログアウトボタン
-export const CreateAccountPage = () => {
-  return (
-    <Button variant="contained" color="primary" onClick={() => signIn()}>
-      <Link href="/createAccountPage">アカウント作成</Link>
-    </Button>
-  );
-};

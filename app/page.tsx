@@ -3,26 +3,19 @@
 import React from 'react';
 import { useSession } from 'next-auth/react';
 import { NextPage } from 'next';
-import { LoginButton, LogoutButton, CreateAccountPage } from "@/app/components/button";
+import { LoginButton, LogoutButton } from "@/components/button";
 
 const Login: NextPage = () => {
   const { data: session } = useSession();
 
   return (
-    <main
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <>
       {
         // セッションがある場合は、プロファイルを表示する
         session && (
           <div>
-            <h1>プロファイル</h1>
-            <div>{session.user?.name}</div>
-            <div>{session.user?.email}</div>
+            <p>アカウント名</p>
+            <p>{session.user?.name}</p>
             <LogoutButton />
           </div>
         )
@@ -36,7 +29,7 @@ const Login: NextPage = () => {
           </div>
         )
       }
-    </main>
+    </>
   );
 };
 
