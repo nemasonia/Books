@@ -14,8 +14,6 @@ const Login: NextPage = () => {
         // セッションがある場合は、プロファイルを表示する
         session && (
           <div>
-            <p>アカウント名</p>
-            <p>{session.user?.name}</p>
             <LogoutButton />
           </div>
         )

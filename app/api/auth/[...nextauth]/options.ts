@@ -1,7 +1,7 @@
 import type { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import prisma from "@/lib/prisma"
+import { prisma } from "@/lib/prisma"
 
 import type { Adapter } from "next-auth/adapters";
 
@@ -12,7 +12,16 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!
     }),
   ],
-  session: { strategy: "jwt" },
   adapter: PrismaAdapter(prisma) as Adapter,
   secret: process.env.SECRET,
-};
+
+  callbacks: {
+    session: ({ session, user }) => ({
+      ...session,
+      user: {
+        ...session.user,
+        id: user.id, // 追加
+      },
+    }),
+  },
+}

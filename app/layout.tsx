@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import NextAuthProvider from '@/app/providers/NextAuth'
-import Link from 'next/link'
 import CssBaseline from "@mui/material/CssBaseline";
-import theme from '@/components/theme';
 import { ThemeProvider } from "@mui/material/styles";
+import theme from '@/components/theme';
+import HeaderLink from '@/components/headerLink'
 
 import './globals.css'
 
@@ -27,10 +27,7 @@ export default function RootLayout({
         <body className={inter.className}>
           <NextAuthProvider>
             <header>
-              <ul>
-                <li><Link href="/">top</Link></li>
-                <li><Link href="/BookShelf">本棚</Link></li>
-              </ul>
+              <HeaderLink />
             </header>
             {children}
           </NextAuthProvider>

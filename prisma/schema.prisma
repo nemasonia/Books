@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model BooksItem {
+model BookItem {
   id           String  @id @default(cuid())
   title        String
   volumeNumber Int
@@ -15,18 +15,18 @@ model BooksItem {
   author       User?   @relation(fields: [authorId], references: [id])
   authorId     String?
 
-  @@map("booksItem")
+  @@map("bookItem")
 }
 
 model User {
-  id            String      @id @default(cuid())
+  id            String     @id @default(cuid())
   name          String?
-  email         String?     @unique
-  emailVerified DateTime?   @map("email_verified")
+  email         String?    @unique
+  emailVerified DateTime?  @map("email_verified")
   image         String?
-  createdAt     DateTime    @default(now()) @map(name: "created_at")
-  updatedAt     DateTime    @updatedAt @map(name: "updated_at")
-  BooksItem     BooksItem[]
+  createdAt     DateTime   @default(now()) @map(name: "created_at")
+  updatedAt     DateTime   @updatedAt @map(name: "updated_at")
+  BooksItem     BookItem[]
   accounts      Account[]
   sessions      Session[]
 

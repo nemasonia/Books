@@ -1,12 +1,12 @@
 -- CreateTable
-CREATE TABLE "booksItem" (
+CREATE TABLE "bookItem" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "volumeNumber" INTEGER NOT NULL,
     "memo" TEXT,
     "authorId" TEXT,
 
-    CONSTRAINT "booksItem_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "bookItem_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -75,7 +75,7 @@ CREATE UNIQUE INDEX "verificationtokens_token_key" ON "verificationtokens"("toke
 CREATE UNIQUE INDEX "verificationtokens_identifier_token_key" ON "verificationtokens"("identifier", "token");
 
 -- AddForeignKey
-ALTER TABLE "booksItem" ADD CONSTRAINT "booksItem_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "bookItem" ADD CONSTRAINT "bookItem_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "accounts" ADD CONSTRAINT "accounts_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;

@@ -2,7 +2,6 @@
 
 import { Button } from "@mui/material";
 import { signIn, signOut } from "next-auth/react";
-import Link from 'next/link'
 
 // ログインボタン
 export const LoginButton = () => {
