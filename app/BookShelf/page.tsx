@@ -1,7 +1,7 @@
 'use client';
 
-import React from "react";
-import { POST, GET, PATCH, DELETE } from "../api/bookItem/route"
+import { useState, useEffect, ChangeEvent } from 'react';
+
 import Box from '@mui/material/Box';
 import { DataGrid, GridRowsProp } from '@mui/x-data-grid';
 import { booksItemCol } from "@/types/bookItem"
@@ -10,24 +10,37 @@ import { useSession } from 'next-auth/react';
 import type { BookItem } from "@prisma/client"
 
 const BookShelf = () => {
+  const [content, setContent] = useState('');
+  const [dataSource, setDataSource] = useState<BookItem[]>([]);
+
   const { data: session } = useSession();
+  const authorId = (session == null) ? "" : session.user?.id;
 
-  const bookItem: BookItem = {
-    id: "null",
-    title: "string",
-    volumeNumber: 1,
-    memo: "string",
-    authorId: (session == null) ? "" : session.user?.id,
+  useEffect(() => {
+    const fetchBookItem = async () => {
+      const response = await fetch(`/api/bookItem?id=${authorId}`, {
+        method: 'GET',
+      });
+      const bookItem = await response.json();
+      setDataSource(bookItem);
+    };
+    fetchBookItem();
+  },);
+
+  const BookItem = async () => {
+    const response = await fetch(`/api/bookItem?id=${authorId}`, {
+      method: 'GET',
+    });
+
+    const bookItem = await response.json();
+    setDataSource(bookItem);
   };
-
-  let rows: BookItem[] = []
-  GET(bookItem).then(val => { rows = val })
 
   return (
     <div className="BookShelf">
       <Box sx={{ height: 400, width: '100%' }}>
         <DataGrid
-          rows={rows}
+          rows={dataSource}
           columns={booksItemCol}
           initialState={{
             pagination: {

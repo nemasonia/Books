@@ -1,11 +1,13 @@
-import { prisma } from "@/lib/prisma"
+import { NextRequest, NextResponse } from 'next/server';
+import prisma from "@/lib/prisma"
 
 import type { BookItem } from "@prisma/client"
+import { string } from 'zod';
 
 export async function GET(
-  param: BookItem,
+  request: NextRequest
 ) {
-  const authorId = param.authorId;
+  const authorId = request.nextUrl.searchParams.get("id");
 
   const bookItems = await prisma.bookItem.findMany({
     where: {
@@ -16,7 +18,7 @@ export async function GET(
     }
   });
 
-  return bookItems
+  return NextResponse.json(bookItems);
 }
 
 export async function POST(
