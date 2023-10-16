@@ -8,7 +8,6 @@ export async function GET(
   request: NextRequest
 ) {
   const authorId = request.nextUrl.searchParams.get("id");
-
   const bookItems = await prisma.bookItem.findMany({
     where: {
       authorId: authorId,
@@ -21,43 +20,51 @@ export async function GET(
   return NextResponse.json(bookItems);
 }
 
-export async function POST(
-  param: BookItem,
-) {
-  const { title, volumeNumber, memo, authorId } = param;
-
-  await prisma.bookItem.create({
-    data: {
-      title, volumeNumber, memo, authorId
-    },
-  });
-}
-
 export async function PATCH(
-  param: BookItem,
+  request: NextRequest
 ) {
-  const id = param.id;
-  const { volumeNumber, memo } = param;
+  const BookItem = await request.json();
+  const { id, title, volumeNumber, memo } = BookItem.updatedRow;
 
   await prisma.bookItem.update({
     where: {
       id: id,
     },
     data: {
-      volumeNumber,
-      memo,
+      title: title,
+      volumeNumber: Number(volumeNumber),
+      memo: memo,
     },
   });
 }
 
-export async function DELETE(
-  param: BookItem,
+export async function POST(
+  request: NextRequest
 ) {
-  const id = param.id;
+  const BookItem = await request.json();
+  const { id, title, volumeNumber, memo, authorId } = BookItem.bookItem;
+  await prisma.bookItem.create({
+    data: {
+      id: id,
+      title: title,
+      volumeNumber: Number(volumeNumber),
+      memo: memo,
+      authorId: authorId,
+    },
+  });
+  return NextResponse.json({ message: "This Worked", success: true });
+}
+
+export async function DELETE(
+  request: NextRequest
+) {
+  const BookItem = await request.json();
+  const id = BookItem.id[0];
 
   await prisma.bookItem.delete({
     where: {
       id: id,
     },
-  });
+  },);
+  return NextResponse.json({ message: "This Worked", success: true });
 }
